@@ -47,10 +47,18 @@ grafana-operator-controller-manager-85fd5c89bb-qpfgt   2/2     Running   0      
 prometheus-operator-6b495cc576-q54mm                   1/1     Running   0          8m46s
 ```
 
-**.Install Pelorus**
-Once the Operator have been istalled completely, it's time to deploy the Pelorus instance. 
+**.Run Pelorus**
+Once the Operator have been istalled completely, it's time to deploy the Pelorus ecosystem. 
 
 We will use the Pelorus chart:
 ```zsh
 helm install pelorus charts/pelorus --namespace pelorus
 ```
+
+Now, we can check a lot of resources get created:
+* Prometheus and Grafana operator (```oc get pod -n pelorus | grep operator```)
+* The Pelorus stack
+    * A **Prometheus** instance (```oc get ```)
+    * A **Grafana** instance
+
+**.Customizing Pelorus**
