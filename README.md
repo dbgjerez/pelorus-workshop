@@ -36,7 +36,7 @@ oc create namespace pelorus
 helm install operators charts/operators --namespace pelorus
 ```
 
-If we explore the pods, we can see that Pelorus have deployed ```Grafana``` and ```Prometheus```.
+If we explore the pods, we can see that Pelorus have deployed ```Grafana``` and ```Prometheus``` operators. 
 
 ```zsh
 ❯ oc get pods -n pelorus
