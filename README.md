@@ -58,7 +58,10 @@ helm install pelorus charts/pelorus --namespace pelorus
 Now, we can check a lot of resources get created:
 * Prometheus and Grafana operator (```oc get pod -n pelorus | grep operator```)
 * The Pelorus stack
-    * A **Prometheus** instance (```oc get ```)
-    * A **Grafana** instance
+    * A **Prometheus** instance (```oc get route -n pelorus | grep prometheus | awk '{print $2}'```)
+    * A **Grafana** instance (```oc get route -n pelorus | grep grafana | awk '{print $2}'```)
+    * A **ServiceMonitor** to scrap the metrics (```oc get ServiceMonitor -n pelorus```)
+    * A **GrafanaDatasource** to read the information (```❯ oc get GrafanaDatasource -n pelorus```)
+    * A set of **GrafanaDashboards** to visualize the information (```oc get GrafanaDashboard -n pelorus```)
 
 **.Customizing Pelorus**
