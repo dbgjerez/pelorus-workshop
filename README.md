@@ -38,6 +38,8 @@ helm install operators charts/operators --namespace pelorus
 
 If we explore the pods, we can see that Pelorus have deployed ```Grafana``` and ```Prometheus``` operators. 
 
+To check it, we find the respective controllers: 
+
 ```zsh
 ❯ oc get pods -n pelorus
 NAME                                                   READY   STATUS    RESTARTS   AGE
