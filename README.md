@@ -103,11 +103,13 @@ Login with your user and password into Grafana. Once logged, you can explore the
 
 ![Pelorus default dashboards](images/pelorus-dashboard-list.png)
 
-The first one
+The first one offers us a quick vision about the state of delivery. In this case, we can see only the pelorus installation.
 
 ![Pelorus delivery dashboard](images/pelorus-delivery-dashboard.png)
 
-// voy por la parte en la que examino 3 ns
+The another dashboard, offers us a detailed information by application.
+
+### Deploy our own applications
 
 ## Uninstall
 
