@@ -76,3 +76,27 @@ It's as simple as create our own ```values.yaml``` file.
 
 
 ## Visualize the metrics
+
+In this case we will explore how to work with 
+
+// voy por la parte en la que examino 3 ns
+
+## Uninstall
+
+The fisrt step is to uninstall the pelorus stack.
+
+```zsh
+❯ helm uninstall pelorus --namespace pelorus
+```
+
+Once the stack is totally uninstalled, you can delete the operator:
+
+```zsh 
+❯ helm uninstall operators --namespace pelorus
+```
+
+And finally, we will delete the namespace:
+
+```zsh
+❯ oc delete project pelorus
+```
