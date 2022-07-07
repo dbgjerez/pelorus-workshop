@@ -34,7 +34,13 @@ oc create namespace pelorus
 **.Install the operator with Helm**
 
 ```zsh
-helm install operators charts/operators --namespace pelorus
+❯ helm install operators charts/operators --namespace pelorus
+NAME: operators
+LAST DEPLOYED: Thu Jul  7 10:11:49 2022
+NAMESPACE: pelorus
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
 ```
 
 If we explore the pods, we can see that Pelorus have deployed ```Grafana``` and ```Prometheus``` operators. 
@@ -54,7 +60,12 @@ Once the Operator have been istalled completely, it's time to deploy the Pelorus
 
 We will use the Pelorus chart:
 ```zsh
-helm install pelorus charts/pelorus --namespace pelorus
+❯ helm install pelorus charts/pelorus --namespace pelorus
+NAME: pelorus
+LAST DEPLOYED: Thu Jul  7 10:12:36 2022
+NAMESPACE: pelorus
+STATUS: deployed
+REVISION: 1
 ```
 
 Now, we can check a lot of resources get created:
