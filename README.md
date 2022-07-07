@@ -158,7 +158,41 @@ At this moment you can go to the Grafana Pelorus Dashboard and it could be empty
 
 Now, we will use our helm chart to deploy the demo application in the different namespaces:
 
+Firsty we have to understand how classify Pelorus the applications. Pelorus uses the ```app.kubernetes.io/name``` label. In this example we are going to use a regular expression ```{env}-{app-name}``` to see the differences. 
 
+To deploy ```dev and test``` environments, we will create the descriptors to apply: 
+
+```zsh
+❯ helm template chart/ --values values.dev.yaml > dev.yaml
+❯ helm template chart/ --values values.pre.yaml > pre.yaml
+```
+
+And apply it:
+
+```zsh
+❯ oc apply -f dev.yaml
+❯ oc apply -f pre.yaml
+```
+
+After a seconds, Pelorus should show us the information, we can see the logs of Pelorus exporter:
+
+```zsh
+❯ oc get pod -n pelorus --field-selector status.phase=Running | grep deploytime-exporter | awk {'print $1'}
+deploytime-exporter-2-bhwmt
+```
+
+```zsh
+❯ oc logs -n pelorus deploytime-exporter-2-bhwmt
+07-07-2022 11:58:24 INFO     collect: start
+07-07-2022 11:58:24 INFO     Watching namespaces {'pre', 'prod', 'dev'}
+07-07-2022 11:58:24 INFO     generate_metrics: start
+07-07-2022 11:58:24 DEBUG    /opt/app-root/src/deploytime/app.py:224 get_replicas() API Object not found for version: extensions/v1beta1 object: ReplicaSet
+07-07-2022 11:58:24 DEBUG    /opt/app-root/src/deploytime/app.py:163 generate_metrics() Getting Replicas for pod: golang-helloworld-58bf99d67-fgztx in namespace: dev
+```
+
+Now, we can go to the Grafana dashboard and the information is displayed.
+
+The following steps could be use another exporters such as failure or commit time.
 
 ## Uninstall
 
