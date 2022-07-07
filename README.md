@@ -111,6 +111,55 @@ The another dashboard, offers us a detailed information by application.
 
 ### Deploy our own applications
 
+In this example we will use a demo application written in Golang. This application expose a rest endpoint and can be found here: [https://github.com/dbgjerez/golang-k8s-helm-helloworld](https://github.com/dbgjerez/golang-k8s-helm-helloworld)
+
+The ```app``` folder in this repository contains a helm chart to deploy the application and some ```values-{env}.yaml``` files.
+
+The idea is to deploy some applications in differents namespace and customize the Pelorus installation to see the frecuency deployment information.
+
+#### Customize pelorus
+Now, we will change the pelorus configuration to inspect only ```dev, pre and prod``` namespaces. 
+
+For this step, we will go to the pelorus folder and upgrade the installation. The file ```demo/pelorus/values-pelorus.yaml``` contains the necessary information. 
+
+Specifically, the new values file indicate the time exporter application to use and the configuration of it:
+
+```yaml
+exporters:
+  instances:
+  - app_name: deploytime-exporter
+    source_context_dir: exporters/
+    extraEnv:
+    - name: APP_FILE
+      value: deploytime/app.py
+    - name: LOG_LEVEL
+      value: DEBUG
+    - name: NAMESPACES
+      value: dev, pre, prod
+    source_ref: master
+    source_url: https://github.com/konveyor/pelorus.git
+```
+
+Take it and copy into the pelorus folder. Now, we will upgrade the installation with this command:
+
+```zsh
+❯ helm upgrade pelorus charts/pelorus --namespace pelorus --values values-pelorus.yaml
+Release "pelorus" has been upgraded. Happy Helming!
+NAME: pelorus
+LAST DEPLOYED: Thu Jul  7 12:35:23 2022
+NAMESPACE: pelorus
+STATUS: deployed
+REVISION: 2
+```
+
+At this moment you can go to the Grafana Pelorus Dashboard and it could be empty. 
+
+#### Deploy our applications
+
+Now, we will use our helm chart to deploy the demo application in the different namespaces:
+
+
+
 ## Uninstall
 
 The fisrt step is to uninstall the pelorus stack.
