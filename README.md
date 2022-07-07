@@ -14,16 +14,16 @@
 
 ## Installation
 
-**.Clone Pelorus**
+### Clone Pelorus
 
-In this example we will clone the Pelorus 1.6.0 version
+In this example, we will clone the Pelorus 1.6.0 version
 
 ```zsh
 git clone --depth 1 --branch v1.6.0 https://github.com/konveyor/pelorus
 cd pelorus
 ```
 
-**.Create the namespace**
+### Create the namespace
 
 I will use the namespace ```pelorus```. Feel free to use another namespace. 
 
@@ -31,7 +31,7 @@ I will use the namespace ```pelorus```. Feel free to use another namespace.
 oc create namespace pelorus
 ```
 
-**.Install the operator with Helm**
+### Install the operator with Helm
 
 ```zsh
 ❯ helm install operators charts/operators --namespace pelorus
@@ -43,7 +43,7 @@ REVISION: 1
 TEST SUITE: None
 ```
 
-If we explore the pods, we can see that Pelorus have deployed ```Grafana``` and ```Prometheus``` operators. 
+If we explore the pods, we can see that Pelorus has deployed ```Grafana``` and ```Prometheus``` operators. 
 
 To check it, we find the respective controllers: 
 
@@ -54,9 +54,9 @@ grafana-operator-controller-manager-85fd5c89bb-qpfgt   2/2     Running   0      
 prometheus-operator-6b495cc576-q54mm                   1/1     Running   0          8m46s
 ```
 
-**.Run Pelorus**
+### Launch Pelorus
 
-Once the Operator have been istalled completely, it's time to deploy the Pelorus ecosystem. 
+Once the Operator has been installed completely, it's time to deploy the Pelorus ecosystem. 
 
 We will use the Pelorus chart:
 ```zsh
@@ -77,52 +77,52 @@ Now, we can check a lot of resources get created:
     * A **GrafanaDatasource** to read the information (```oc get GrafanaDatasource -n pelorus```)
     * A set of **GrafanaDashboards** to visualize the information (```oc get GrafanaDashboard -n pelorus```)
 
-**.Customizing Pelorus**
+### Customizing Pelorus
 
-How Pelorus was deployed using Helm, we can override an customize our installation. 
+How Pelorus was deployed using Helm, we can override and customize our installation. 
 
-It's as simple as create our own ```values.yaml``` file. 
+It's as simple as creating our own ```values.yaml``` file. 
 
 > NOTE: For more information: https://pelorus.readthedocs.io/en/latest/Configuration/
 
 
 ## Visualize the metrics
 
-In this part, we will check the default metrics, modify the default installation and check our own applications.
+In this part, we will check the default metrics, modify the installation, and check our own applications.
 
 ### Default metrics
 
-The first is get the url of Grafana:
+The first is to get the URL of Grafana:
 
 ```zsh
 ❯ oc get route -n pelorus | grep grafana | awk {'print $2'}
 grafana-route-pelorus.apps.<<your-cluster>>.com
 ```
 
-Login with your user and password into Grafana. Once logged, you can explore the default dashboards:
+Log in with your user and password into Grafana. Once logged, you can explore the default dashboards:
 
 ![Pelorus default dashboards](images/pelorus-dashboard-list.png)
 
-The first one offers us a quick vision about the state of delivery. In this case, we can see only the pelorus installation.
+The first one offers us a quick vision of the state of delivery. In this case, we can see only the pelorus installation.
 
 ![Pelorus delivery dashboard](images/pelorus-delivery-dashboard.png)
 
-The another dashboard, offers us a detailed information by application.
+The other dashboard offers us detailed information by application.
 
-### Deploy our own applications
+### Deploy our applications
 
-In this example we will use a demo application written in Golang. This application expose a rest endpoint and can be found here: [https://github.com/dbgjerez/golang-k8s-helm-helloworld](https://github.com/dbgjerez/golang-k8s-helm-helloworld)
+In this example, we will use a demo application written in Golang. This application exposes a rest endpoint and can be found here: [https://github.com/dbgjerez/golang-k8s-helm-helloworld](https://github.com/dbgjerez/golang-k8s-helm-helloworld)
 
 The ```app``` folder in this repository contains a helm chart to deploy the application and some ```values-{env}.yaml``` files.
 
-The idea is to deploy some applications in differents namespace and customize the Pelorus installation to see the frecuency deployment information.
+The idea is to deploy some applications in different namespaces and customize the Pelorus installation to see the frequency deployment information.
 
 #### Customize pelorus
-Now, we will change the pelorus configuration to inspect only ```dev, pre and prod``` namespaces. 
+Now, we will change the pelorus configuration to inspect only ```dev, pre, and prod``` namespaces. 
 
 For this step, we will go to the pelorus folder and upgrade the installation. The file ```demo/pelorus/values-pelorus.yaml``` contains the necessary information. 
 
-Specifically, the new values file indicate the time exporter application to use and the configuration of it:
+Specifically, the new values file indicates the time exporter application to use and its configuration of it:
 
 ```yaml
 exporters:
@@ -140,7 +140,7 @@ exporters:
     source_url: https://github.com/konveyor/pelorus.git
 ```
 
-Take it and copy into the pelorus folder. Now, we will upgrade the installation with this command:
+Take it and copy it into the pelorus folder. Now, we will upgrade the installation with this command:
 
 ```zsh
 ❯ helm upgrade pelorus charts/pelorus --namespace pelorus --values values-pelorus.yaml
@@ -153,7 +153,6 @@ REVISION: 2
 ```
 
 At this moment you can go to the Grafana Pelorus Dashboard and it could be empty. 
-
 #### Deploy our applications
 
 Now, we will use our helm chart to deploy the demo application in the different namespaces:
