@@ -88,7 +88,24 @@ It's as simple as create our own ```values.yaml``` file.
 
 ## Visualize the metrics
 
-In this case we will explore how to work with 
+In this part, we will check the default metrics, modify the default installation and check our own applications.
+
+### Default metrics
+
+The first is get the url of Grafana:
+
+```zsh
+❯ oc get route -n pelorus | grep grafana | awk {'print $2'}
+grafana-route-pelorus.apps.<<your-cluster>>.com
+```
+
+Login with your user and password into Grafana. Once logged, you can explore the default dashboards:
+
+![Pelorus default dashboards](images/pelorus-dashboard-list.png)
+
+The first one
+
+![Pelorus delivery dashboard](images/pelorus-delivery-dashboard.png)
 
 // voy por la parte en la que examino 3 ns
 
