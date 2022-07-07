@@ -153,11 +153,12 @@ REVISION: 2
 ```
 
 At this moment you can go to the Grafana Pelorus Dashboard and it could be empty. 
+
 #### Deploy our applications
 
 Now, we will use our helm chart to deploy the demo application in the different namespaces:
 
-Firsty we have to understand how classify Pelorus the applications. Pelorus uses the ```app.kubernetes.io/name``` label. In this example we are going to use a regular expression ```{env}-{app-name}``` to see the differences. 
+First, we have to understand how Pelorus classifies the applications, using the ```app.kubernetes.io/name``` label. In this example, we are going to use a regular expression ```{env}-{app-name}``` to see the differences. 
 
 To deploy ```dev and test``` environments, we will create the descriptors to apply: 
 
@@ -173,7 +174,7 @@ And apply it:
 ❯ oc apply -f pre.yaml
 ```
 
-After a seconds, Pelorus should show us the information, we can see the logs of Pelorus exporter:
+After a few seconds, Pelorus should show us the information. We can see the logs of Pelorus exporter:
 
 ```zsh
 ❯ oc get pod -n pelorus --field-selector status.phase=Running | grep deploytime-exporter | awk {'print $1'}
@@ -189,19 +190,19 @@ deploytime-exporter-2-bhwmt
 07-07-2022 11:58:24 DEBUG    /opt/app-root/src/deploytime/app.py:163 generate_metrics() Getting Replicas for pod: golang-helloworld-58bf99d67-fgztx in namespace: dev
 ```
 
-Now, we can go to the Grafana dashboard and the information is displayed.
+Now, we can go to the Grafana dashboard and display the information.
 
-The following steps could be use another exporters such as failure or commit time.
+The following steps could be to use another exporter such as failure or commit time.
 
 ## Uninstall
 
-The fisrt step is to uninstall the pelorus stack.
+The first step is to uninstall the pelorus stack.
 
 ```zsh
 ❯ helm uninstall pelorus --namespace pelorus
 ```
 
-Once the stack is totally uninstalled, you can delete the operator:
+Once the stack is uninstalled, you can delete the operator:
 
 ```zsh 
 ❯ helm uninstall operators --namespace pelorus
